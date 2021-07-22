@@ -4,7 +4,7 @@ CREATE TABLE product
     name            varchar(50),
     description      varchar(255),
     price       varchar(100),
-    created_at  datetime,
-    modified_at datetime,
+    created_at  date,
+    modified_at date,
     PRIMARY KEY (id)
 );
