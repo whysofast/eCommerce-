@@ -1,5 +1,6 @@
 package com.example.ecommercefast.controller
 
+import com.example.ecommercefast.domain.CartUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.badRequest
 import org.springframework.http.ResponseEntity.ok
@@ -11,18 +12,18 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("cart")
-class CartController {
+class CartController(
+    private val cartUseCase: CartUseCase
+) {
 
     @PostMapping("/create")
     fun create(
         @Valid @RequestBody cartDTO: CartDTO
     ): ResponseEntity<CartDTO> {
 
-        return if (cartDTO.customer.hasValidCpf()) {
-            ok(cartDTO)
-        } else {
-            badRequest().build()
-        }
+        val cart = cartUseCase.save(cartDTO.toModel())
+
+        return ok(cart.toDto())
 
 //        Criar dominio para processear o cupom e mover a validação de cpf
 

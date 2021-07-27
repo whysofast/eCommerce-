@@ -1,11 +1,35 @@
 package com.example.ecommercefast.controller
 
 import java.util.UUID
+import com.example.ecommercefast.controller.CartState.CREATED
+
+class Cart(
+    val id: UUID? = null,
+    val customer: Customer,
+    val items: List<Item>,
+    val state: CartState = CREATED
+) {
+    fun toDto() = CartDTO(
+        customer = customer,
+        items = items
+    )
+}
 
 data class CartDTO(
     val customer: Customer,
     val items: List<Item>
-)
+) {
+    fun toModel() = Cart(
+        customer = customer,
+        items = items
+    )
+}
+
+enum class CartState {
+    CREATED,
+    CANCELLED,
+    COMPLETED
+}
 
 data class Item(
     val quantity: Long,
