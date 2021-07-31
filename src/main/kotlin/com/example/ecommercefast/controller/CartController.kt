@@ -19,7 +19,7 @@ class CartController(
     @PostMapping("/create")
     fun create(
         @Valid @RequestBody cartDTO: CartDTO
-    ): ResponseEntity<CartDTO> {
+    ): ResponseEntity<CartOutDTO> {
 
         val cart = cartUseCase.save(cartDTO.toModel())
 

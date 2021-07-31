@@ -24,9 +24,14 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("javax.validation:validation-api:2.0.1.Final")
+
+    implementation( "com.google.code.gson:gson:2.8.5")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+//    testImplementation(platform("org.junit:junit-bom:5.7.2"))
+//    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 tasks.withType<KotlinCompile> {

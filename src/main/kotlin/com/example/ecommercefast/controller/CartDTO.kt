@@ -9,11 +9,22 @@ class Cart(
     val items: List<Item>,
     val state: CartState = CREATED
 ) {
-    fun toDto() = CartDTO(
-        customer = customer,
-        items = items
+    fun toDto() = CartOutDTO(
+        getTotal()
     )
+
+    private fun getTotal(): Long {
+        var total = 0L
+        this.items.map {
+            total += it.quantity * it.product.price
+        }
+        return total
+    }
 }
+
+data class CartOutDTO(
+    val total: Long
+)
 
 data class CartDTO(
     val customer: Customer,
@@ -79,8 +90,8 @@ fun Customer.hasValidCpf(): Boolean {
     if (cleanCPF.hasInvalidLength()) return false
     if (cleanCPF.hasRepeatableDigits()) return false
 
-    val firstDigit = cleanCPF.calculateteDigit(10,9)
-    val secondDigit = cleanCPF.calculateteDigit(11,10)
+    val firstDigit = cleanCPF.calculateteDigit(10, 9)
+    val secondDigit = cleanCPF.calculateteDigit(11, 10)
 
     val lastTwoDigits = cleanCPF.slice(9 until 11)
 
