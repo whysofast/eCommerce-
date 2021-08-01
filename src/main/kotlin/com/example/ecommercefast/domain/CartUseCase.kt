@@ -14,7 +14,6 @@ class CartUseCase {
     fun save(cart: Cart) : Cart {
         if (cart.customer.hasValidCpf()){
             cart.items.map { carrinho.add(it) }
-            print("carrinho daora esse: $carrinho")
         } else {
             throw CustomerWithInvalidCpfException("customer ${cart.customer} has invalid cpf ${cart.customer.cpf}")
         }

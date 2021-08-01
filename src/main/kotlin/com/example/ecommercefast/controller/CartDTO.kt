@@ -2,12 +2,15 @@ package com.example.ecommercefast.controller
 
 import java.util.UUID
 import com.example.ecommercefast.controller.CartState.CREATED
+import java.time.Duration
+import java.time.LocalDateTime
 
 class Cart(
     val id: UUID? = null,
     val customer: Customer,
     val items: List<Item>,
-    val state: CartState = CREATED
+    val state: CartState = CREATED,
+    val coupon: Coupon? = null
 ) {
     fun toDto() = CartOutDTO(
         getTotal()
@@ -18,6 +21,8 @@ class Cart(
         this.items.map {
             total += it.quantity * it.product.price
         }
+
+        this.coupon?.let { total -= (total * it.discount).toLong() }
         return total
     }
 }
@@ -28,11 +33,19 @@ data class CartOutDTO(
 
 data class CartDTO(
     val customer: Customer,
-    val items: List<Item>
+    val items: List<Item>,
+    val coupon: String? = null
 ) {
     fun toModel() = Cart(
         customer = customer,
-        items = items
+        items = items,
+        coupon = coupon?.let {
+            try {
+                Coupon.valueOf(it).ifNotExpired()
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }
     )
 }
 
@@ -40,6 +53,17 @@ enum class CartState {
     CREATED,
     CANCELLED,
     COMPLETED
+}
+
+enum class Coupon(val discount: Double, val expiresAt: LocalDateTime) {
+    FAST20(0.2, LocalDateTime.of(2022, 1, 1, 0, 0, 0)),
+    FAST2019(0.4, LocalDateTime.of(2019, 12, 31, 0, 0, 0))
+}
+
+fun Coupon.ifNotExpired(): Coupon? {
+    return if (Duration.between(this.expiresAt, LocalDateTime.now()).toDays() < 0) {
+        this
+    } else null
 }
 
 data class Item(

@@ -1,6 +1,8 @@
 package com.example.ecommercefast
 
 import com.example.ecommercefast.controller.Cart
+import com.example.ecommercefast.controller.CartDTO
+import com.example.ecommercefast.controller.Coupon
 import com.example.ecommercefast.controller.Customer
 import com.example.ecommercefast.controller.Item
 import com.example.ecommercefast.controller.Product
@@ -26,27 +28,29 @@ class CartTests {
 
     @Test
     fun `should succesfully create a cart with 3 products`() {
-        val body = Gson().toJson(Cart(
-            customer = (Customer(
-                name = "Fast",
-                email = "fast@cora.com.br",
-                cpf = "01234567890",
-                cep = "45028634"
-            )),
-            items = listOf(
-                Item(
-                    quantity = 1,
-                    product = Product(name = "Mouse", description = "Destro", price = 200_00)
-                ),
-                Item(
-                    quantity = 2,
-                    product = Product(name = "Teclado", description = "Mecanico", price = 500_00)
-                ), Item(
-                    quantity = 3,
-                    product = Product(name = "Monitor", description = "144hz", price = 1000_00)
+        val body = Gson().toJson(
+            CartDTO(
+                customer = (Customer(
+                    name = "Fast",
+                    email = "fast@cora.com.br",
+                    cpf = "01234567890",
+                    cep = "45028634"
+                )),
+                items = listOf(
+                    Item(
+                        quantity = 1,
+                        product = Product(name = "Mouse", description = "Destro", price = 200_00)
+                    ),
+                    Item(
+                        quantity = 2,
+                        product = Product(name = "Teclado", description = "Mecanico", price = 500_00)
+                    ), Item(
+                        quantity = 3,
+                        product = Product(name = "Monitor", description = "144hz", price = 1000_00)
+                    )
                 )
             )
-        ))
+        )
 
         mvc.perform(
             MockMvcRequestBuilders.post("/cart/create")
@@ -55,7 +59,147 @@ class CartTests {
         )
             .andExpect(status().isOk)
             .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(420000L))
-            .andDo(MockMvcResultHandlers.print())
+//            .andDo(MockMvcResultHandlers.print())
+
+
+    }
+
+    @Test
+    fun `should succesfully create a cart with a valid coupon`() {
+        val body = Gson().toJson(
+            CartDTO(
+                customer = (Customer(
+                    name = "Fast",
+                    email = "fast@cora.com.br",
+                    cpf = "01234567890",
+                    cep = "45028634"
+                )),
+                items = listOf(
+                    Item(
+                        quantity = 1,
+                        product = Product(name = "Mouse", description = "Destro", price = 200_00)
+                    ),
+                    Item(
+                        quantity = 2,
+                        product = Product(name = "Teclado", description = "Mecanico", price = 500_00)
+                    ), Item(
+                        quantity = 3,
+                        product = Product(name = "Monitor", description = "144hz", price = 1000_00)
+                    )
+                ),
+                coupon = Coupon.FAST20.name
+            )
+        )
+
+        mvc.perform(
+            MockMvcRequestBuilders.post("/cart/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(336000L))
+
+
+    }
+
+    @Test
+    fun `should not apply discount with a invalid coupon`() {
+
+        val item = Item(
+            quantity = 1,
+            product = Product(name = "Mouse", description = "Destro", price = 200_00)
+        )
+        val body = Gson().toJson(
+            CartDTO(
+                customer = (Customer(
+                    name = "Fast",
+                    email = "fast@cora.com.br",
+                    cpf = "01234567890",
+                    cep = "45028634"
+                )),
+                items = listOf(
+                    item
+                ),
+                coupon = "VALEGRATIS"
+            )
+        )
+
+        mvc.perform(
+            MockMvcRequestBuilders.post("/cart/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(item.product.price))
+
+
+    }
+
+    @Test
+    fun `should not apply discount with a expired coupon`() {
+
+        val item = Item(
+            quantity = 1,
+            product = Product(name = "Mouse", description = "Destro", price = 200_00)
+        )
+        val body = Gson().toJson(
+            CartDTO(
+                customer = (Customer(
+                    name = "Fast",
+                    email = "fast@cora.com.br",
+                    cpf = "01234567890",
+                    cep = "45028634"
+                )),
+                items = listOf(
+                    item
+                ),
+                coupon = "FAST2019"
+            )
+        )
+
+        mvc.perform(
+            MockMvcRequestBuilders.post("/cart/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(item.product.price))
+
+
+    }
+
+    @Test
+    fun `should not create cart with invalid cpf`() {
+
+        val invalidCpf = "01234567891"
+
+        val item = Item(
+            quantity = 1,
+            product = Product(name = "Mouse", description = "Destro", price = 200_00)
+        )
+
+        val body = Gson().toJson(
+            CartDTO(
+                customer = (Customer(
+                    name = "Fast",
+                    email = "fast@cora.com.br",
+                    cpf = invalidCpf,
+                    cep = "45028634"
+                )),
+                items = listOf(
+                    item
+                ),
+                coupon = "VALEGRATIS"
+            )
+        )
+
+        mvc.perform(
+            MockMvcRequestBuilders.post("/cart/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body)
+        )
+            .andExpect(status().isUnprocessableEntity)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid CPF"))
 
 
     }
