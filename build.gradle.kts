@@ -30,8 +30,8 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-//    testImplementation(platform("org.junit:junit-bom:5.7.2"))
-//    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform("org.junit:junit-bom:5.7.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 tasks.withType<KotlinCompile> {

@@ -10,10 +10,12 @@ class Cart(
     val customer: Customer,
     val items: List<Item>,
     val state: CartState = CREATED,
-    val coupon: Coupon? = null
+    val coupon: Coupon? = null,
+    var shipping: Double = 0.0
 ) {
     fun toDto() = CartOutDTO(
-        getTotal()
+        total = getTotal(),
+        shipping = shipping
     )
 
     private fun getTotal(): Long {
@@ -28,7 +30,8 @@ class Cart(
 }
 
 data class CartOutDTO(
-    val total: Long
+    val total: Long,
+    val shipping: Double
 )
 
 data class CartDTO(
@@ -75,8 +78,16 @@ data class Product(
     val id: UUID? = null,
     val name: String,
     val description: String,
-    val price: Long
-)
+    val price: Long,
+    val measurements : Measurements
+) {
+    data class Measurements(
+        val weight: Long,
+        val height: Long,
+        val width: Long,
+        val depth: Long
+    )
+}
 
 data class Customer(
     val name: String,
