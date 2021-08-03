@@ -2,7 +2,6 @@ package com.example.ecommercefast.controller
 
 import com.example.ecommercefast.domain.CartUseCase
 import org.springframework.http.ResponseEntity
-import org.springframework.http.ResponseEntity.badRequest
 import org.springframework.http.ResponseEntity.ok
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,10 +23,6 @@ class CartController(
         val cart = cartUseCase.save(cartDTO.toModel())
 
         return ok(cart.toDto())
-
-//        Criar dominio para processear o cupom e mover a validação de cpf
-
-
     }
 
 }

@@ -13,10 +13,10 @@ sealed class DomainException(message: String) : RuntimeException(message)
 class CustomerWithInvalidCpfException(message: String) : RuntimeException(message)
 
 @ControllerAdvice
-class ExceptionHandler: ResponseEntityExceptionHandler() {
+class ExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [CustomerWithInvalidCpfException::class])
-    fun handleInvalidCpfException(ex: CustomerWithInvalidCpfException, request: WebRequest) : ResponseEntity<Any> {
+    fun handleInvalidCpfException(ex: CustomerWithInvalidCpfException, request: WebRequest): ResponseEntity<Any> {
         return status(HttpStatus.UNPROCESSABLE_ENTITY).body(mapOf("message" to "Invalid CPF"))
     }
 

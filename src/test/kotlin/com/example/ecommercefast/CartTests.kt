@@ -1,9 +1,6 @@
 package com.example.ecommercefast
 
 import com.example.ecommercefast.controller.CartDTO
-import com.example.ecommercefast.controller.Customer
-import com.example.ecommercefast.controller.Item
-import com.example.ecommercefast.controller.Product
 import com.google.gson.Gson
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,14 +32,29 @@ class CartTests {
                 items = listOf(
                     Item(
                         quantity = 1,
-                        product = Product(name = "Mouse", description = "Destro", price = 200_00,measurements = Product.Measurements(0L,0L,0L,0L))
-                        ),
+                        product = Product(
+                            name = "Mouse",
+                            description = "Destro",
+                            price = 200_00,
+                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+                        )
+                    ),
                     Item(
                         quantity = 2,
-                        product = Product(name = "Teclado", description = "Mecanico", price = 500_00,measurements = Product.Measurements(0L,0L,0L,0L))
+                        product = Product(
+                            name = "Teclado",
+                            description = "Mecanico",
+                            price = 500_00,
+                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+                        )
                     ), Item(
                         quantity = 3,
-                        product = Product(name = "Monitor", description = "144hz", price = 1000_00,measurements = Product.Measurements(0L,0L,0L,0L))
+                        product = Product(
+                            name = "Monitor",
+                            description = "144hz",
+                            price = 1000_00,
+                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+                        )
                     )
                 )
             )
@@ -72,14 +84,29 @@ class CartTests {
                 items = listOf(
                     Item(
                         quantity = 1,
-                        product = Product(name = "Mouse", description = "Destro", price = 200_00,measurements = Product.Measurements(0L,0L,0L,0L))
+                        product = Product(
+                            name = "Mouse",
+                            description = "Destro",
+                            price = 200_00,
+                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+                        )
                     ),
                     Item(
                         quantity = 2,
-                        product = Product(name = "Teclado", description = "Mecanico", price = 500_00,measurements = Product.Measurements(0L,0L,0L,0L))
+                        product = Product(
+                            name = "Teclado",
+                            description = "Mecanico",
+                            price = 500_00,
+                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+                        )
                     ), Item(
                         quantity = 3,
-                        product = Product(name = "Monitor", description = "144hz", price = 1000_00,measurements = Product.Measurements(0L,0L,0L,0L))
+                        product = Product(
+                            name = "Monitor",
+                            description = "144hz",
+                            price = 1000_00,
+                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+                        )
                     )
                 ),
                 coupon = "FAST20"
@@ -102,7 +129,12 @@ class CartTests {
 
         val item = Item(
             quantity = 1,
-            product = Product(name = "Mouse", description = "Destro", price = 200_00,measurements = Product.Measurements(0L,0L,0L,0L))
+            product = Product(
+                name = "Mouse",
+                description = "Destro",
+                price = 200_00,
+                measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+            )
         )
         val body = Gson().toJson(
             CartDTO(
@@ -135,7 +167,12 @@ class CartTests {
 
         val item = Item(
             quantity = 1,
-            product = Product(name = "Mouse", description = "Destro", price = 200_00,measurements = Product.Measurements(0L,0L,0L,0L))
+            product = Product(
+                name = "Mouse",
+                description = "Destro",
+                price = 200_00,
+                measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+            )
         )
         val body = Gson().toJson(
             CartDTO(
@@ -170,7 +207,12 @@ class CartTests {
 
         val item = Item(
             quantity = 1,
-            product = Product(name = "Mouse", description = "Destro", price = 200_00,measurements = Product.Measurements(0L,0L,0L,0L))
+            product = Product(
+                name = "Mouse",
+                description = "Destro",
+                price = 200_00,
+                measurements = Product.Measurements(0.0, 0L, 0L, 0L)
+            )
         )
 
         val body = Gson().toJson(
