@@ -1,7 +1,10 @@
 package com.example.ecommercefast
 
-import com.example.ecommercefast.Product.Measurements
 import com.example.ecommercefast.controller.CartDTO
+import com.example.ecommercefast.models.Customer
+import com.example.ecommercefast.models.Item
+import com.example.ecommercefast.models.Product
+import com.example.ecommercefast.models.Product.Measurements
 import com.google.gson.Gson
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

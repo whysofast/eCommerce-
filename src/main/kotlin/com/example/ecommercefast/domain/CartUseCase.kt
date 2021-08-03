@@ -1,8 +1,8 @@
 package com.example.ecommercefast.domain
 
-import com.example.ecommercefast.Cart
-import com.example.ecommercefast.Item
-import com.example.ecommercefast.hasValidCpf
+import com.example.ecommercefast.models.Cart
+import com.example.ecommercefast.models.Item
+import com.example.ecommercefast.models.hasValidCpf
 import com.example.ecommercefast.shippingAPI.ShippingPort
 import org.springframework.stereotype.Service
 

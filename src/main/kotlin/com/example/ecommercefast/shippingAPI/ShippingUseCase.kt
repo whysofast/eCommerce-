@@ -1,6 +1,6 @@
 package com.example.ecommercefast.shippingAPI
 
-import com.example.ecommercefast.Product.Measurements
+import com.example.ecommercefast.models.Product.Measurements
 import org.springframework.stereotype.Service
 
 @Service

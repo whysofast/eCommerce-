@@ -1,4 +1,4 @@
-package com.example.ecommercefast
+package com.example.ecommercefast.models
 
 data class Customer(
     val name: String,

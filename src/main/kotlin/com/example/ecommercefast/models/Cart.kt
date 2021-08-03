@@ -1,4 +1,4 @@
-package com.example.ecommercefast
+package com.example.ecommercefast.models
 
 import com.example.ecommercefast.controller.CartOutDTO
 import java.util.UUID

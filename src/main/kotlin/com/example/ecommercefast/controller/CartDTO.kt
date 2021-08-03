@@ -1,10 +1,10 @@
 package com.example.ecommercefast.controller
 
-import com.example.ecommercefast.Cart
-import com.example.ecommercefast.Coupon
-import com.example.ecommercefast.Customer
-import com.example.ecommercefast.Item
-import com.example.ecommercefast.ifNotExpired
+import com.example.ecommercefast.models.Cart
+import com.example.ecommercefast.models.Coupon
+import com.example.ecommercefast.models.Customer
+import com.example.ecommercefast.models.Item
+import com.example.ecommercefast.models.ifNotExpired
 
 data class CartDTO(
     val customer: Customer,

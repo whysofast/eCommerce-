@@ -1,4 +1,4 @@
-package com.example.ecommercefast
+package com.example.ecommercefast.models
 
 import java.util.UUID
 
