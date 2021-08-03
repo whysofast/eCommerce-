@@ -17,7 +17,7 @@ fun Customer.hasValidCpf(): Boolean {
         return this.all { it == this.first() }
     }
 
-    fun String.calculateteDigit(factor: Int, max: Int): Int {
+    fun String.calculateDigit(factor: Int, max: Int): Int {
         val cpfAsDigitArrayLimited = this.map { it.digitToInt() }.slice(0 until max)
         var total = 0
         var fator = factor
@@ -36,8 +36,8 @@ fun Customer.hasValidCpf(): Boolean {
     if (cleanCPF.hasInvalidLength()) return false
     if (cleanCPF.hasRepeatableDigits()) return false
 
-    val firstDigit = cleanCPF.calculateteDigit(10, 9)
-    val secondDigit = cleanCPF.calculateteDigit(11, 10)
+    val firstDigit = cleanCPF.calculateDigit(10, 9)
+    val secondDigit = cleanCPF.calculateDigit(11, 10)
 
     val lastTwoDigits = cleanCPF.slice(9 until 11)
 
