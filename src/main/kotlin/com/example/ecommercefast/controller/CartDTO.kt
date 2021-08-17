@@ -1,9 +1,9 @@
 package com.example.ecommercefast.controller
 
-import com.example.ecommercefast.models.Cart
 import com.example.ecommercefast.models.Coupon
 import com.example.ecommercefast.models.Customer
 import com.example.ecommercefast.models.Item
+import com.example.ecommercefast.models.Order
 import com.example.ecommercefast.models.ifNotExpired
 
 data class CartDTO(
@@ -11,7 +11,7 @@ data class CartDTO(
     val items: List<Item>,
     val coupon: String? = null
 ) {
-    fun toModel() = Cart(
+    fun toModel() = Order(
         customer = customer,
         items = items,
         coupon = coupon?.let {

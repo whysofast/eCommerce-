@@ -3,7 +3,6 @@ package com.example.ecommercefast
 import com.example.ecommercefast.controller.CartDTO
 import com.example.ecommercefast.models.Customer
 import com.example.ecommercefast.models.Item
-import com.example.ecommercefast.models.Product
 import com.google.gson.Gson
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class CartTests {
+class OrderTests {
 
     @Autowired
     lateinit var mvc: MockMvc
@@ -35,29 +34,17 @@ class CartTests {
                 items = listOf(
                     Item(
                         quantity = 1,
-                        product = Product(
-                            name = "Mouse",
-                            description = "Destro",
-                            price = 200_00,
-                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-                        )
+                        productId = 1,
+                        price = 200_00
                     ),
                     Item(
                         quantity = 2,
-                        product = Product(
-                            name = "Teclado",
-                            description = "Mecanico",
-                            price = 500_00,
-                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-                        )
+                        productId = 2,
+                        price = 500_00
                     ), Item(
                         quantity = 3,
-                        product = Product(
-                            name = "Monitor",
-                            description = "144hz",
-                            price = 1000_00,
-                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-                        )
+                        productId = 3,
+                        price = 1000_00
                     )
                 )
             )
@@ -70,8 +57,6 @@ class CartTests {
         )
             .andExpect(status().isOk)
             .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(420000L))
-
-
     }
 
     @Test
@@ -87,29 +72,17 @@ class CartTests {
                 items = listOf(
                     Item(
                         quantity = 1,
-                        product = Product(
-                            name = "Mouse",
-                            description = "Destro",
-                            price = 200_00,
-                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-                        )
+                        productId = 1,
+                        price = 200_00
                     ),
                     Item(
                         quantity = 2,
-                        product = Product(
-                            name = "Teclado",
-                            description = "Mecanico",
-                            price = 500_00,
-                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-                        )
+                        productId = 2,
+                        price = 500_00
                     ), Item(
                         quantity = 3,
-                        product = Product(
-                            name = "Monitor",
-                            description = "144hz",
-                            price = 1000_00,
-                            measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-                        )
+                        productId = 3,
+                        price = 1000_00
                     )
                 ),
                 coupon = "FAST20"
@@ -132,13 +105,10 @@ class CartTests {
 
         val item = Item(
             quantity = 1,
-            product = Product(
-                name = "Mouse",
-                description = "Destro",
-                price = 200_00,
-                measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-            )
+            productId = 1,
+            price = 200_00
         )
+
         val body = Gson().toJson(
             CartDTO(
                 customer = (Customer(
@@ -160,7 +130,7 @@ class CartTests {
                 .content(body)
         )
             .andExpect(status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(item.product.price))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(item.price))
 
 
     }
@@ -170,13 +140,10 @@ class CartTests {
 
         val item = Item(
             quantity = 1,
-            product = Product(
-                name = "Mouse",
-                description = "Destro",
-                price = 200_00,
-                measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-            )
+            productId = 1,
+            price = 200_00
         )
+
         val body = Gson().toJson(
             CartDTO(
                 customer = (Customer(
@@ -198,7 +165,7 @@ class CartTests {
                 .content(body)
         )
             .andExpect(status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(item.product.price))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(item.price))
 
 
     }
@@ -210,12 +177,8 @@ class CartTests {
 
         val item = Item(
             quantity = 1,
-            product = Product(
-                name = "Mouse",
-                description = "Destro",
-                price = 200_00,
-                measurements = Product.Measurements(0.0, 0L, 0L, 0L)
-            )
+            productId = 1,
+            price = 200_00
         )
 
         val body = Gson().toJson(

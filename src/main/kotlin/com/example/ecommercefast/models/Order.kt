@@ -3,7 +3,7 @@ package com.example.ecommercefast.models
 import com.example.ecommercefast.controller.CartOutDTO
 import java.util.UUID
 
-class Cart(
+class Order(
     val id: UUID? = null,
     val customer: Customer,
     val items: List<Item>,
@@ -18,7 +18,7 @@ class Cart(
     private fun getTotal(): Long {
         var total = 0L
         this.items.map {
-            total += it.quantity * it.product.price
+            total += it.quantity * it.price
         }
 
         this.coupon?.let { total -= (total * it.discount).toLong() }

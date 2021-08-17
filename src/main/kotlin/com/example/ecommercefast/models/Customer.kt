@@ -7,7 +7,7 @@ data class Customer(
     var cep: String
 )
 
-fun Customer.hasValidCpf(): Boolean {
+fun Customer.hasInvalidCpf(): Boolean {
 
     fun String.hasInvalidLength(): Boolean {
         return this.length != 11
@@ -41,5 +41,5 @@ fun Customer.hasValidCpf(): Boolean {
 
     val lastTwoDigits = cleanCPF.slice(9 until 11)
 
-    return lastTwoDigits == "${firstDigit}${secondDigit}"
+    return lastTwoDigits != "${firstDigit}${secondDigit}"
 }

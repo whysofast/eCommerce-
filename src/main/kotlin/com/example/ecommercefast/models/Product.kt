@@ -1,9 +1,7 @@
 package com.example.ecommercefast.models
 
-import java.util.UUID
-
 data class Product(
-    val id: UUID? = null,
+    val id: Long? = null,
     val name: String,
     val description: String,
     val price: Long,
@@ -19,5 +17,6 @@ data class Product(
 
 data class Item(
     val quantity: Long,
-    val product: Product
+    val productId: Long,
+    val price: Long
 )
