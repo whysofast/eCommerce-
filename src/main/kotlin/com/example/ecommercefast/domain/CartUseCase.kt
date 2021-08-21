@@ -34,8 +34,15 @@ class CartUseCase(
         }
 
         val newOrder =
-            Order(items = carrinho, customer = order.customer, shipping = order.shipping, coupon = order.coupon)
+            Order(
+                items = carrinho.toMutableList(),
+                customer = order.customer,
+                shipping = order.shipping,
+                formerCoupon = order.formerCoupon
+            )
 
+        // Pra fazer o mockMvc não bugar e transpaçar resultado de teste pra teste
+        carrinho.clear()
         return orderDataAccess.save(newOrder)
     }
 }

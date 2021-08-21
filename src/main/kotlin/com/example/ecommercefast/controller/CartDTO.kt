@@ -1,7 +1,7 @@
 package com.example.ecommercefast.controller
 
-import com.example.ecommercefast.models.Coupon
 import com.example.ecommercefast.models.Customer
+import com.example.ecommercefast.models.FormerCoupon
 import com.example.ecommercefast.models.Item
 import com.example.ecommercefast.models.Order
 import com.example.ecommercefast.models.ifNotExpired
@@ -14,9 +14,9 @@ data class CartDTO(
     fun toModel() = Order(
         customer = customer,
         items = items,
-        coupon = coupon?.let {
+        formerCoupon = coupon?.let {
             try {
-                Coupon.valueOf(it).ifNotExpired()
+                FormerCoupon.valueOf(it).ifNotExpired()
             } catch (e: IllegalArgumentException) {
                 null
             }

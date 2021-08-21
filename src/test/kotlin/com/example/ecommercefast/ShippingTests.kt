@@ -1,10 +1,13 @@
 package com.example.ecommercefast
 
 import com.example.ecommercefast.controller.CartDTO
+import com.example.ecommercefast.dataaccessadapter.OrderDataAccessAdapter
 import com.example.ecommercefast.models.Customer
 import com.example.ecommercefast.models.Item
 import com.google.gson.Gson
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -19,6 +22,9 @@ class ShippingTests {
 
     @Autowired
     lateinit var mvc: MockMvc
+
+    @Autowired
+    lateinit var orderDataAccess: OrderDataAccessAdapter
 
     @Test
     fun `should calculate shipment price`() {
@@ -49,8 +55,11 @@ class ShippingTests {
                 .content(body)
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(item.price))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.shipping").value("14.999999999999998"))
+
+        assertAll(
+            { assertEquals(orderDataAccess.orders.first().getTotal(), item.price) },
+            { assertEquals(orderDataAccess.orders.first().shipping, 14.999999999999998) }
+        )
     }
 
     @Test
@@ -58,7 +67,7 @@ class ShippingTests {
         val item = Item(
             quantity = 1,
             productId = 5,
-            price = 10_00
+            price = 500_00
         )
 
         val body = Gson().toJson(
@@ -82,7 +91,10 @@ class ShippingTests {
                 .content(body)
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.total").value(item.price))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.shipping").value("10.0"))
+        
+        assertAll(
+            { assertEquals(orderDataAccess.orders.first().getTotal(), item.price) },
+            { assertEquals(orderDataAccess.orders.first().shipping, 10.0) }
+        )
     }
 }

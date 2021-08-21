@@ -7,7 +7,7 @@ class Order(
     val id: UUID? = null,
     val customer: Customer,
     val items: List<Item>,
-    val coupon: Coupon? = null,
+    val formerCoupon: FormerCoupon? = null,
     var shipping: Double = 0.0
 ) {
     fun toDto() = CartOutDTO(
@@ -15,13 +15,13 @@ class Order(
         shipping = shipping
     )
 
-    private fun getTotal(): Long {
+    fun getTotal(): Long {
         var total = 0L
         this.items.map {
             total += it.quantity * it.price
         }
 
-        this.coupon?.let { total -= (total * it.discount).toLong() }
+        this.formerCoupon?.let { total -= (total * it.discount).toLong() }
         return total
     }
 }
